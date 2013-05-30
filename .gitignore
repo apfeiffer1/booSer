@@ -4,3 +4,7 @@ Testing/
 CMakeCache.txt
 Makefile
 cmake_install.cmake
+test1.boostArchive
+test2_boostArchive.gz
+test_embedded
+test_gzipArchive
