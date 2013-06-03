@@ -1,7 +1,7 @@
 
 cmake_minimum_required (VERSION 2.6)
 
-project (PyClang)
+project (BooSerExamples)
 
 include_directories ( "/opt/local/include/" ) 
 
@@ -14,6 +14,9 @@ TARGET_LINK_LIBRARIES( test_embedded ${Boost_LIBRARIES} )
 add_executable(test_gzipArchive test_gzipArchive.cxx)
 TARGET_LINK_LIBRARIES( test_gzipArchive ${Boost_LIBRARIES} )
 
+add_executable(test_xmlOArchive test_xmlOArchive.cxx)
+TARGET_LINK_LIBRARIES( test_xmlOArchive ${Boost_LIBRARIES} )
+
 ENABLE_TESTING()
 
 # test_embedded
@@ -24,3 +27,7 @@ set_tests_properties (test_embedded PROPERTIES PASS_REGULAR_EXPRESSION "tNew-aft
 # test_gzipArchive
 add_test (test_gzipArchive test_gzipArchive)
 set_tests_properties (test_gzipArchive PROPERTIES PASS_REGULAR_EXPRESSION "result is 0")
+
+# test_xmlOArchive
+add_test (test_xmlOArchive test_xmlOArchive)
+set_tests_properties (test_xmlOArchive PROPERTIES PASS_REGULAR_EXPRESSION "XML written to file")

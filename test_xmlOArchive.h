@@ -1,14 +1,14 @@
 
 #include <boost/serialization/vector.hpp>    // includes <vector>
 
-class TestStruct2 {
+class TestStruct {
 public:
-  TestStruct2() : a(0) {}
+  TestStruct() : a(0) {}
 
   void add(float x);
   void show();
 	
-  bool operator==(const TestStruct2 &rhs);
+  bool operator==(const TestStruct &rhs);
   
   std::vector<float> b;
   int a;
@@ -17,16 +17,16 @@ public:
   template<class Archive>
       void serialize(Archive & ar, const unsigned int version)
       {
-          ar & a;
-          ar & b;
+          ar & BOOST_SERIALIZATION_NVP(a);
+          ar & BOOST_SERIALIZATION_NVP(b);
       }
 };
 
-void TestStruct2::add(float x) { 
+void TestStruct::add(float x) { 
     b.push_back(x); 
 }
 
-void TestStruct2::show() { 
+void TestStruct::show() { 
     std::cout << "a=" << a << std::endl;
 	std::cout << "len(b)="<< b.size() << std::endl;
 
@@ -38,6 +38,6 @@ void TestStruct2::show() {
 
 }
 
-bool TestStruct2::operator==(const TestStruct2 &rhs) {
+bool TestStruct::operator==(const TestStruct &rhs) {
 	return ( (a==rhs.a) && (b==rhs.b) ); 
 }

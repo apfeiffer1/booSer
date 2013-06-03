@@ -6,5 +6,7 @@ Makefile
 cmake_install.cmake
 test1.boostArchive
 test2_boostArchive.gz
+outFile.xml
 test_embedded
 test_gzipArchive
+test_xmlOArchive
