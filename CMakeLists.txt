@@ -1,33 +1,29 @@
 
 cmake_minimum_required (VERSION 2.6)
 
-project (BooSerExamples)
+project (BooSerExamples CXX)
 
 include_directories ( "/opt/local/include/" ) 
 
 FIND_PACKAGE( Boost 1.53 COMPONENTS serialization iostreams REQUIRED )
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(test_embedded test_embedded.cxx)
-TARGET_LINK_LIBRARIES( test_embedded ${Boost_LIBRARIES} )
-
-add_executable(test_gzipArchive test_gzipArchive.cxx)
-TARGET_LINK_LIBRARIES( test_gzipArchive ${Boost_LIBRARIES} )
-
-add_executable(test_xmlOArchive test_xmlOArchive.cxx)
-TARGET_LINK_LIBRARIES( test_xmlOArchive ${Boost_LIBRARIES} )
-
 ENABLE_TESTING()
 
-# test_embedded
-add_test (test_embedded test_embedded)
-set_tests_properties (test_embedded PROPERTIES PASS_REGULAR_EXPRESSION "tNew-before.a=0")
-set_tests_properties (test_embedded PROPERTIES PASS_REGULAR_EXPRESSION "tNew-after.a=42")
+macro (setup exeName testString)
+	add_executable( ${exeName} ${exeName}.cxx)
+	TARGET_LINK_LIBRARIES( ${exeName} ${Boost_LIBRARIES} )
 
-# test_gzipArchive
-add_test (test_gzipArchive test_gzipArchive)
-set_tests_properties (test_gzipArchive PROPERTIES PASS_REGULAR_EXPRESSION "result is 0")
+	add_test ( ${exeName} ${exeName} )
+	set_tests_properties ( ${exeName} PROPERTIES PASS_REGULAR_EXPRESSION ${testString} )
+endmacro (setup)
 
-# test_xmlOArchive
-add_test (test_xmlOArchive test_xmlOArchive)
-set_tests_properties (test_xmlOArchive PROPERTIES PASS_REGULAR_EXPRESSION "XML written to file")
+
+setup(test_embedded    "tNew-after.a=42")
+setup(test_gzipArchive "result is 0")
+setup(test_xmlOArchive "XML written to file")
+setup(storeText        "Object stored to file")
+setup(loadText         "Object loaded from file")
+setup(storeXML         "Object stored to file")
+setup(loadXML          "Object loaded from file")
+
